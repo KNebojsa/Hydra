@@ -1,0 +1,16 @@
+Creating web api  using cmd: 
+1. mkdir Hydra - for creating folder
+2. cd Hydra - position
+3. dotnet new sln - new solution
+4. dotnet new webapi -controllers -n Hydra.WebApi - folder API project files
+5. dotnet sln add Hydra.WebApi- to add api project inside of solution
+* code . - to open that folder in VS
+
+VS Setup:
+1. C# Dev Kit - extension
+2. Material Icon Theme - extension
+3. NuGet Package Manager - extension
+4. NuGet Gallery - extension
+5. SQLite - extension
+* In case VS code bugs for what ever reason type in top console ">reload" to find "Developer: Reload Window"
+* dotnet watch - instead of "dotnet run" for hot reload (not to have to stop and restart application)
