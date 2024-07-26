@@ -1,4 +1,7 @@
 
+using Hydra.WebApi.Data;
+using Microsoft.EntityFrameworkCore;
+
 namespace Hydra.WebApi
 {
     public class Program
@@ -9,6 +12,10 @@ namespace Hydra.WebApi
 
             // Add services to the container.
             builder.Services.AddControllers();
+            builder.Services.AddDbContext<DataContext>(opt => 
+            {
+                opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
+            });
 
             var app = builder.Build();
 
