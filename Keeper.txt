@@ -1,3 +1,10 @@
+Usefull links: 
+1. https://v17.angular.io/guide/setup-local
+2. https://valor-software.com/ngx-bootstrap/#/documentation
+3.https://www.udemy.com/course/build-an-app-with-aspnet-core-and-angular-from-scratch/learn/lecture/44314748#overview
+4. https://github.com/TryCatchLearn/DatingApp-v6/commits/master
+
+
 Creating web api  using cmd: 
 1. mkdir Hydra - for creating folder
 2. cd Hydra - position
@@ -12,5 +19,20 @@ VS Setup:
 3. NuGet Package Manager - extension
 4. NuGet Gallery - extension
 5. SQLite - extension
-* In case VS code bugs for what ever reason type in top console ">reload" to find "Developer: Reload Window"
+6. .NET Install Tool
+7. C#
+8. C# Extensions
+9. C# Namespace Autocompletion
+10. .NET Install Tool
+11. Angular Language Service
+
+
+
+* In ccase VS code bugs for what ever reason type in top console ">reload" to find "Developer: Reload Window"
 * dotnet watch - instead of "dotnet run" for hot reload (not to have to stop and restart application)
+
+Angular:
+1. cd in solution folder (Hydra) 
+2. run ng new client - for creating angular proj (client is name of the ng project)
+3. cd in client folder and run
+4. ng serve - to start angular app
