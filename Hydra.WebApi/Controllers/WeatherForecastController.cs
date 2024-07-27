@@ -2,9 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Hydra.WebApi.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class WeatherForecastController : ControllerBase
+    public class WeatherForecastController : BasicApiController
     {
         private static readonly string[] Summaries = new[]
         {
