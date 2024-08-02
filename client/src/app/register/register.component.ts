@@ -21,12 +21,12 @@ export class RegisterComponent {
 
   register() {
     this.accountService.register(this.model).subscribe({
-      next: response => {
+      next: (response) => {
         console.log(response);
         this.cancel();
       },
-      error: error => console.log(error)
-    })
+      error: (error) => console.log(error),
+    });
   }
 
   cancel() {

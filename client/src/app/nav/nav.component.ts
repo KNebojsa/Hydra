@@ -23,7 +23,7 @@ export class NavComponent {
     });
   }
 
-  logout(){
+  logout() {
     this.accountService.logout();
   }
 }
