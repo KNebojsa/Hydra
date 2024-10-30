@@ -13,7 +13,7 @@ namespace Hydra.WebApi.Controllers
 {
     public class UsersController(DataContext context) : BasicApiController
     {
-        [HttpGet("GetUsers")]
+        [HttpGet]
         [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
         {

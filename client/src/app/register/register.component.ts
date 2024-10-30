@@ -1,6 +1,7 @@
 import { Component, EventEmitter, inject, input, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AccountService } from '../_services/account.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-register',
@@ -11,6 +12,7 @@ import { AccountService } from '../_services/account.service';
 })
 export class RegisterComponent {
   private accountService = inject(AccountService);
+  private toastr = inject(ToastrService);
   //-------------------------------------------------------------------------------------------------------------------------------------------
   //@Input() usersFromHomeComponent: any; //old way before 17.3 Angular (issue with not been requierd and not givving compile error)
   //usersFromHomeComponent = input.required<any>(); //new way 17.3 +
@@ -25,7 +27,7 @@ export class RegisterComponent {
         console.log(response);
         this.cancel();
       },
-      error: (error) => console.log(error),
+      error: (error) => this.toastr.error(error.error),
     });
   }
 
