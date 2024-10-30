@@ -11,11 +11,10 @@ using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 
 namespace Hydra.WebApi.Controllers
 {
-
     public class UsersController(DataContext context) : BasicApiController
     {
+        [HttpGet("GetUsers")]
         [AllowAnonymous]
-        [HttpGet]
         public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
         {
             var users = await context.Users.ToListAsync();
@@ -33,6 +32,13 @@ namespace Hydra.WebApi.Controllers
             }
 
             return Ok(user);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("GetNebojsa")]
+        public async Task<IActionResult> GetNebojsa()
+        {
+            return Ok("Nebojsa");
         }
     }
 }

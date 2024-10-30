@@ -36,3 +36,4 @@ Angular:
 2. run ng new client - for creating angular proj (client is name of the ng project)
 3. cd in client folder and run
 4. ng serve - to start angular app
+5. () same as _
