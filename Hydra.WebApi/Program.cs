@@ -3,6 +3,7 @@ using System.Text;
 using Hydra.WebApi.Data;
 using Hydra.WebApi.Extensions;
 using Hydra.WebApi.Interfaces;
+using Hydra.WebApi.Middleware;
 using Hydra.WebApi.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -21,7 +22,9 @@ namespace Hydra.WebApi
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
+            //ExceptionMiddleware has to go first
+            app.UseMiddleware<ExceptionMiddleware>();
+
             app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod()
             .WithOrigins("http://localhost:4200", "https://localhost:4200/"));
 
