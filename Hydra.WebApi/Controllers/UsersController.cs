@@ -2,8 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Hydra.WebApi.Data;
+using Hydra.WebApi.DTOs;
 using Hydra.WebApi.Entities;
+using Hydra.WebApi.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,34 +14,24 @@ using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 
 namespace Hydra.WebApi.Controllers
 {
-    public class UsersController(DataContext context) : BasicApiController
+    [Authorize]
+    public class UsersController(IUserRepository _userRepository, IMapper _mapper) : BasicApiController
     {
         [HttpGet]
-        [AllowAnonymous]
-        public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers()
         {
-            var users = await context.Users.ToListAsync();
-            return Ok(users);
+            return Ok(await _userRepository.GetMembersAsync());
         }
 
-        [Authorize]
-        [HttpGet("{id}")]
-        public async Task<ActionResult<AppUser>> GetUser(int id)
+        [HttpGet("{username}")]
+        public async Task<ActionResult<MemberDto>> GetUser(string username)
         {
-            var user = await context.Users.FindAsync(id);
+            var user = await _userRepository.GetMemberAsync(username);
+
             if (user == null)
-            {
                 return NotFound(user);
-            }
 
-            return Ok(user);
-        }
-
-        [AllowAnonymous]
-        [HttpGet("GetNebojsa")]
-        public async Task<IActionResult> GetNebojsa()
-        {
-            return Ok("Nebojsa");
+            return Ok(_mapper.Map<MemberDto>(user));
         }
     }
 }

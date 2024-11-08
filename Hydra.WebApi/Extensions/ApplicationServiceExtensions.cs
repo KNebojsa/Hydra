@@ -1,4 +1,5 @@
 ﻿using Hydra.WebApi.Data;
+using Hydra.WebApi.Helpers;
 using Hydra.WebApi.Interfaces;
 using Hydra.WebApi.Services;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ public static class ApplicationServiceExtensions
 {
     public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration config)
     {
+
         // Add services to the container.
         services.AddControllers();
         services.AddDbContext<DataContext>(opt =>
@@ -18,6 +20,8 @@ public static class ApplicationServiceExtensions
         });
         services.AddCors();
         services.AddScoped<ITokenService, TokenService>();
+        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
         return services;
     }
