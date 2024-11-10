@@ -33,5 +33,19 @@ namespace Hydra.WebApi.Controllers
 
             return Ok(_mapper.Map<MemberDto>(user));
         }
+
+        [HttpPut("{username}")]
+        public async Task<ActionResult> UpdateMember(string username, MemberDto updateMemberDto)
+        {
+            var user = await _userRepository.GetUserByUsernameAsync(username);
+            if (user == null) return NotFound();
+
+            var x = _mapper.Map(updateMemberDto, user);
+            _userRepository.Update(user);
+
+            if (await _userRepository.SaveAllAsync()) return NoContent();
+
+            return BadRequest("Failed to update user");
+        }
     }
 }

@@ -1,10 +1,11 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { AccountService } from '../../_services/account.service';
 import { Member } from '../../_models/member';
 import { MemberService } from '../../_services/member.service';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { TabsModule } from 'ngx-bootstrap/tabs';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-member-edit',
@@ -14,12 +15,11 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
   styleUrl: './member-edit.component.css',
 })
 export class MemberEditComponent implements OnInit {
-updateMember() {
-throw new Error('Method not implemented.');
-}
+  @ViewChild('editForm') editForm?: NgForm; //vracamo id forme nazad u componentu da mozemo da radimo sa njom
   member?: Member;
   private accountService = inject(AccountService);
   private memberService = inject(MemberService);
+  private toastR = inject(ToastrService);
 
   ngOnInit(): void {
     this.loadMember();
@@ -32,4 +32,15 @@ throw new Error('Method not implemented.');
       next: member => (this.member = member),
     });
   }
+
+  updateMember() {
+    if (this.member) {
+      this.toastR.success('Profile updated successfully');
+      this.editForm?.reset(this.member);
+      // this.memberService.updateMember(this.member).subscribe(() => {
+      //   this.toastR.success('Profile updated successfully');
+      // });
+    }
+  }
+
 }
