@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-test-errors',
@@ -9,12 +10,13 @@ import { Component, inject } from '@angular/core';
   styleUrl: './test-errors.component.css',
 })
 export class TestErrorsComponent {
+  baseUrl = environment.apiUrl;
   private http = inject(HttpClient);
   validationErrors: string[] = [];
 
   get400Error() {
     return this.http
-      .get('https://localhost:5001/api/buggy/bad-request')
+      .get(this.baseUrl + 'buggy/bad-request')
       .subscribe({
         next: (response) => console.log(response),
         error: (error) => console.error(error),
@@ -22,7 +24,7 @@ export class TestErrorsComponent {
   }
 
   get401Error() {
-    return this.http.get('https://localhost:5001/api/buggy/auth').subscribe({
+    return this.http.get(this.baseUrl + 'buggy/auth').subscribe({
       next: (response) => console.log(response),
       error: (error) => console.error(error),
     });
@@ -31,7 +33,7 @@ export class TestErrorsComponent {
   get404Error() {
     this.get400Error();
     return this.http
-      .get('https://localhost:5001/api/buggy/not-found')
+      .get(this.baseUrl + 'buggy/not-found')
       .subscribe({
         next: (response) => console.log(response),
         error: (error) => console.error(error),
@@ -40,7 +42,7 @@ export class TestErrorsComponent {
 
   get500Error() {
     return this.http
-      .get('https://localhost:5001/api/buggy/server-error')
+      .get(this.baseUrl + 'buggy/server-error')
       .subscribe({
         next: (response) => console.log(response),
         error: (error) => console.error(error),
@@ -49,7 +51,7 @@ export class TestErrorsComponent {
 
   get400ValidationError() {
     return this.http
-      .post('https://localhost:5001/api/account/register', {})
+      .post(this.baseUrl + 'account/register', {})
       .subscribe({
         next: (response) => console.log(response),
         error: (error) => {
