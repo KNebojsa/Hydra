@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using Hydra.WebApi.Data;
@@ -34,14 +35,17 @@ namespace Hydra.WebApi.Controllers
             return Ok(_mapper.Map<MemberDto>(user));
         }
 
-        [HttpPut("{username}")]
-        public async Task<ActionResult> UpdateMember(string username, MemberDto updateMemberDto)
+        [HttpPut]
+        public async Task<ActionResult> UpdateUser(MemberUpdateDto memberUpdateDto)
         {
-            var user = await _userRepository.GetUserByUsernameAsync(username);
-            if (user == null) return NotFound();
+            var username = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-            var x = _mapper.Map(updateMemberDto, user);
-            _userRepository.Update(user);
+            if (username == null) return BadRequest("No username found in token");
+
+            var user = await _userRepository.GetUserByUsernameAsync(username);
+            if (user == null) return BadRequest("Could not find user");
+
+            _mapper.Map(memberUpdateDto, user);
 
             if (await _userRepository.SaveAllAsync()) return NoContent();
 

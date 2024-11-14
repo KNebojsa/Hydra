@@ -15,6 +15,7 @@ namespace Hydra.WebApi.Helpers
                 .ForMember(d => d.PhotoUrl, s =>
                 s.MapFrom(x => x.Photos.FirstOrDefault(a => a.IsMain)!.Url));
             CreateMap<Photo, PhotoDto>();
+            CreateMap<MemberUpdateDto, AppUser>();
         }
     }
 }
