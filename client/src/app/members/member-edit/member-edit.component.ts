@@ -1,9 +1,14 @@
-import { Component, HostListener, inject, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  inject,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { AccountService } from '../../_services/account.service';
 import { Member } from '../../_models/member';
 import { MemberService } from '../../_services/member.service';
 import { FormsModule, NgForm } from '@angular/forms';
-import { CommonModule } from '@angular/common';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ToastrService } from 'ngx-toastr';
 
@@ -34,18 +39,16 @@ export class MemberEditComponent implements OnInit {
     const user = this.accountService.currentUser();
     if (!user) return;
     this.memberService.getMember(user.username).subscribe({
-      next: member => (this.member = member),
+      next: (member) => (this.member = member),
     });
   }
 
   updateMember() {
-    if (this.member) {
-      this.toastR.success('Profile updated successfully');
-      this.editForm?.reset(this.member);
-      // this.memberService.updateMember(this.member).subscribe(() => {
-      //   this.toastR.success('Profile updated successfully');
-      // });
-    }
+    this.memberService.updateMember(this.editForm?.value).subscribe({
+      next: (_) => {
+        this.toastR.success('Profile updated successfully');
+        this.editForm?.reset(this.member);
+      },
+    });
   }
-
 }
