@@ -88,6 +88,28 @@ namespace Hydra.WebApi.Controllers
             return BadRequest("Problem setting main photo");
         }
 
+        [HttpDelete("delete-photo/{photoId:int}")]
+        public async Task<ActionResult> DeletePhoto(int photoId)
+        { 
+            var user = await _userRepository.GetUserByUsernameAsync(User.GetUsername());
 
+            if (user == null) return BadRequest("Could not find the user");
+
+            var photo = user.Photos.FirstOrDefault(x => x.Id == photoId);
+
+            if (photo == null || photo.IsMain) return BadRequest("Photo cannot be deleted");
+
+            if (photo.PublicId != null)
+            {
+                var result = await photoService.DeletePhotoAsync(photo.PublicId);
+                if (result.Error != null) return BadRequest(result.Error.Message);
+            }
+
+            user.Photos.Remove(photo);
+
+            if (await _userRepository.SaveAllAsync()) return Ok();
+
+            return BadRequest("Failed to delete the photo");
+        }
     }
 }
