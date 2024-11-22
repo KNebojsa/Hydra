@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using Hydra.WebApi.Data;
 using Hydra.WebApi.DTOs;
 using Hydra.WebApi.Entities;
@@ -13,33 +14,31 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Hydra.WebApi.Controllers
 {
-    public class AccountController(DataContext context, ITokenService tokenService) : BasicApiController
+    public class AccountController(DataContext context, ITokenService tokenService, IMapper mapper) : BasicApiController
     {
         [HttpPost("register")] //account/register
         public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
         {
             if (await UserExist(registerDto.Username))
                 return BadRequest("Username is taken");
-            
-            return Ok();
 
-            //using var hmac = new HMACSHA512();
+            using var hmac = new HMACSHA512();
 
-            //var user = new AppUser()
-            //{
-            //    Username = registerDto.Username,
-            //    PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
-            //    PasswordSalt = hmac.Key
-            //};
+            var user = mapper.Map<AppUser>(registerDto);
 
-            //_context.Users.Add(user);
-            //await _context.SaveChangesAsync();
+            user.Username = registerDto.Username.ToLower();
+            user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password));
+            user.PasswordSalt = hmac.Key;
 
-            //return new UserDto
-            //{
-            //    Username = user.Username,
-            //    Token = tokenService.CreateToken(user)
-            //};
+            context.Users.Add(user);
+            await context.SaveChangesAsync();
+
+            return new UserDto
+            {
+                Username = user.Username,
+                Token = tokenService.CreateToken(user),
+                KnownAs = user.KnownAs
+            };
         }
 
         [HttpPost("login")]
@@ -63,8 +62,9 @@ namespace Hydra.WebApi.Controllers
             return new UserDto
             {
                 Username = user.Username,
+                KnownAs = user.KnownAs,
                 Token = tokenService.CreateToken(user),
-                PhotoUrl = user.Photos.FirstOrDefault(x=>x.IsMain)?.Url
+                PhotoUrl = user.Photos.FirstOrDefault(x => x.IsMain)?.Url
             }; 
         }
         public async Task<bool> UserExist(string username)
