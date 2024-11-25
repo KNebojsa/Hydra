@@ -1,5 +1,6 @@
 ﻿using Hydra.WebApi.DTOs;
 using Hydra.WebApi.Entities;
+using Hydra.WebApi.Helpers;
 using System.Runtime.CompilerServices;
 
 namespace Hydra.WebApi.Interfaces
@@ -11,7 +12,7 @@ namespace Hydra.WebApi.Interfaces
         Task<IEnumerable<AppUser>> GetUsersAsync();
         Task<AppUser?> GetUserByIdAsync(int id);
         Task<AppUser?> GetUserByUsernameAsync(string username);
-        Task<IEnumerable<MemberDto>> GetMembersAsync();
+        Task<PagedList<MemberDto>> GetMembersAsync(UserParams userParams);
         Task<MemberDto?> GetMemberAsync(string username);
     }
 }

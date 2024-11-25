@@ -3,6 +3,7 @@ using AutoMapper;
 using Hydra.WebApi.DTOs;
 using Hydra.WebApi.Entities;
 using Hydra.WebApi.Extensions;
+using Hydra.WebApi.Helpers;
 using Hydra.WebApi.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,9 +14,13 @@ namespace Hydra.WebApi.Controllers
     public class UsersController(IUserRepository _userRepository, IMapper _mapper, IPhotoService photoService) : BasicApiController
     {
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers([FromQuery]UserParams userParams)
         {
-            return Ok(await _userRepository.GetMembersAsync());
+            userParams.CurrentUsername = User.GetUsername();
+            var users = await _userRepository.GetMembersAsync(userParams);
+            Response.AddPaginationHeader(users);
+
+            return Ok(users);
         }
 
         [HttpGet("{username}")]
@@ -63,7 +68,7 @@ namespace Hydra.WebApi.Controllers
             user.Photos.Add(photo);
 
             if (await _userRepository.SaveAllAsync())
-                return CreatedAtAction(nameof(GetUser), new { username = user.Username}, _mapper.Map<PhotoDto>(photo));
+                return CreatedAtAction(nameof(GetUser), new { username = user.Username }, _mapper.Map<PhotoDto>(photo));
 
             return BadRequest("Problem adding photo");
         }
@@ -76,7 +81,7 @@ namespace Hydra.WebApi.Controllers
 
             if (user == null) return BadRequest("Could not find the user");
 
-            var photo = user.Photos.FirstOrDefault(x=>x.Id == photoId);
+            var photo = user.Photos.FirstOrDefault(x => x.Id == photoId);
 
             if (photo == null | photo.IsMain) return BadRequest("Cannot user this as main photo");
 
@@ -92,7 +97,7 @@ namespace Hydra.WebApi.Controllers
 
         [HttpDelete("delete-photo/{photoId:int}")]
         public async Task<ActionResult> DeletePhoto(int photoId)
-        { 
+        {
             var user = await _userRepository.GetUserByUsernameAsync(User.GetUsername());
 
             if (user == null) return BadRequest("Could not find the user");

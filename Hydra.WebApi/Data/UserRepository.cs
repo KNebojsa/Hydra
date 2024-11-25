@@ -2,6 +2,7 @@
 using AutoMapper.QueryableExtensions;
 using Hydra.WebApi.DTOs;
 using Hydra.WebApi.Entities;
+using Hydra.WebApi.Helpers;
 using Hydra.WebApi.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,11 +18,17 @@ namespace Hydra.WebApi.Data
                 .SingleOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<MemberDto>> GetMembersAsync()
+        public async Task<PagedList<MemberDto>> GetMembersAsync(UserParams userParams)
         {
-            return await _context.Users
-                .ProjectTo<MemberDto>(mapper.ConfigurationProvider)
-                .ToListAsync();
+            var query = _context.Users.AsQueryable();
+
+            query = query.Where(x => x.Username != userParams.CurrentUsername);
+            if (userParams.Gender != null)
+            {
+                query = query.Where(x => x.Gender == userParams.Gender);
+            }
+
+            return await PagedList<MemberDto>.CreateAsync(query.ProjectTo<MemberDto>(mapper.ConfigurationProvider), userParams.PageNumber, userParams.PageSize);
         }
 
         public async Task<AppUser?> GetUserByIdAsync(int id)
