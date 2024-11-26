@@ -1,11 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Hydra.WebApi.Helpers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hydra.WebApi.Controllers
 {
+    [ServiceFilter(typeof(LogUserActivity))]
     [ApiController]
     [Route("api/[controller]")]
     public class BasicApiController : ControllerBase
