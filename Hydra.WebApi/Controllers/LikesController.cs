@@ -1,6 +1,7 @@
 ﻿using Hydra.WebApi.DTOs;
 using Hydra.WebApi.Entities;
 using Hydra.WebApi.Extensions;
+using Hydra.WebApi.Helpers;
 using Hydra.WebApi.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -44,9 +45,12 @@ namespace Hydra.WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<MemberDto>>> GetUserLikes(string predicate)
+        public async Task<ActionResult<IEnumerable<MemberDto>>> GetUserLikes([FromQuery]LikesParams likesParams)
         {
-            var users = await likesRepository.GetUserLikes(predicate, User.GetUserId());
+            likesParams.UserId = User.GetUserId();
+            var users = await likesRepository.GetUserLikes(likesParams);
+
+            Response.AddPaginationHeader(users);
             return Ok(users);  
         }
     }
