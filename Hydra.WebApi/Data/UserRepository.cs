@@ -13,7 +13,7 @@ namespace Hydra.WebApi.Data
         public async Task<MemberDto?> GetMemberAsync(string username)
         {
             return await _context.Users
-                .Where(x => x.Username == username)
+                .Where(x => x.UserName == username)
                 .ProjectTo<MemberDto>(mapper.ConfigurationProvider)
                 .SingleOrDefaultAsync();
         }
@@ -22,7 +22,7 @@ namespace Hydra.WebApi.Data
         {
             var query = _context.Users.AsQueryable();
 
-            query = query.Where(x => x.Username != userParams.CurrentUsername);
+            query = query.Where(x => x.UserName != userParams.CurrentUsername);
             if (userParams.Gender != null)
             {
                 query = query.Where(x => x.Gender == userParams.Gender);
@@ -51,7 +51,7 @@ namespace Hydra.WebApi.Data
         {
             return await _context.Users
                 .Include(x => x.Photos)
-                .SingleOrDefaultAsync(a=>a.Username == username);
+                .SingleOrDefaultAsync(a=>a.UserName == username);
         }
 
         public async Task<IEnumerable<AppUser>> GetUsersAsync()

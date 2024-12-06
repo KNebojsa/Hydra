@@ -26,7 +26,7 @@ namespace Hydra.WebApi.Controllers
 
             var user = mapper.Map<AppUser>(registerDto);
 
-            user.Username = registerDto.Username.ToLower();
+            user.UserName = registerDto.Username.ToLower();
             user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password));
             user.PasswordSalt = hmac.Key;
 
@@ -35,7 +35,7 @@ namespace Hydra.WebApi.Controllers
 
             return new UserDto
             {
-                Username = user.Username,
+                Username = user.UserName,
                 Token = tokenService.CreateToken(user),
                 KnownAs = user.KnownAs,
                 Gender = user.Gender
@@ -47,7 +47,7 @@ namespace Hydra.WebApi.Controllers
         {
             var user = await context.Users
                 .Include(p=>p.Photos)
-                .FirstOrDefaultAsync(x => x.Username == loginDto.Username.ToLower());
+                .FirstOrDefaultAsync(x => x.UserName == loginDto.Username.ToLower());
 
             if (user == null) return Unauthorized("Invalid UserName");
 
@@ -62,7 +62,7 @@ namespace Hydra.WebApi.Controllers
 
             return new UserDto
             {
-                Username = user.Username,
+                Username = user.UserName,
                 KnownAs = user.KnownAs,
                 Gender = user.Gender,
                 Token = tokenService.CreateToken(user),
@@ -71,7 +71,7 @@ namespace Hydra.WebApi.Controllers
         }
         public async Task<bool> UserExist(string username)
         {
-            return await context.Users.AnyAsync(x => x.Username.ToLower() == username.ToLower());
+            return await context.Users.AnyAsync(x => x.UserName.ToLower() == username.ToLower());
         }
     }
 }
