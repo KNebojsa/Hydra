@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Member } from '../_models/member';
 import { PaginatedResult } from '../_models/pagination';
-import { setPaginatedResponse, setPaginatiopnHeaders } from './paginationHelper';
+import { setPaginatedResponse, setPaginationHeaders } from './paginationHelper';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +19,7 @@ export class LikesService {
   }
 
   getLikes(predicate: string, pageNumber: number, pageSize: number){
-    let params = setPaginatiopnHeaders(pageNumber, pageSize);
+    let params = setPaginationHeaders(pageNumber, pageSize);
 
     params = params.append('predicate', predicate);
 

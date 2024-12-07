@@ -7,7 +7,7 @@ import { PaginatedResult } from '../_models/pagination';
 import { UserParams } from '../_models/userParams';
 import { of } from 'rxjs';
 import { AccountService } from './account.service';
-import { setPaginatedResponse, setPaginatiopnHeaders } from './paginationHelper';
+import { setPaginatedResponse, setPaginationHeaders } from './paginationHelper';
 
 @Injectable({
   providedIn: 'root',
@@ -30,7 +30,7 @@ export class MemberService {
 
     if (response) return setPaginatedResponse(response, this.paginatedResult);
 
-    let params = setPaginatiopnHeaders(
+    let params = setPaginationHeaders(
       this.userParams().pageNumber,
       this.userParams().pageSize
     );

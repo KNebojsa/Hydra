@@ -1,1 +1,84 @@
-<p>messages works!</p>
+<div class="containter mt-3">
+  <div class="d-flex">
+    <div class="brn-group">
+      <button
+        class="btn btn-primary"
+        (click)="loadMessages()"
+        [(ngModel)]="container"
+        btnRadio="Unread"
+      >
+        Unread
+      </button>
+      <button
+        class="btn btn-primary"
+        (click)="loadMessages()"
+        [(ngModel)]="container"
+        btnRadio="Inbox"
+      >
+        Inbox
+      </button>
+      <button
+        class="btn btn-primary"
+        (click)="loadMessages()"
+        [(ngModel)]="container"
+        btnRadio="Outbox"
+      >
+        Outbox
+      </button>
+    </div>
+  </div>
+</div>
+
+@if (!messageService.paginatedResult()?.items) {
+<h3>No Messages</h3>
+} @else {
+<table class="table table-hover mt-3" style="cursor: pointer">
+  <thead>
+    <tr>
+      <th style="width: 40%">Message</th>
+      <th style="width: 20%">From / To</th>
+      <th style="width: 20%">Sent / Recived</th>
+      <th style="width: 20%"></th>
+    </tr>
+  </thead>
+  <tbody class="align-middle">
+    @for (message of messageService.paginatedResult()?.items; track message.id)
+    {
+        <tr routerLink="{{getRoute(message)}}" [queryParams]="{tab: 'Messages'}">
+            <td>{{ message.content }}</td>
+            <td>
+              <div>
+                <img
+                  [src]="container === 'Outbox'
+                      ? (message.recipientPhotoUrl || './assets/user.png')
+                      : (message.sendPhotoUrl || './assets/user.png')
+                  "
+                  alt="image of user"
+                  class="rounded-circle me-2"
+                >
+                <strong>{{container==='Outbox' ? message.recipientUsername : message.senderUsername}}</strong>
+              </div>
+            </td>
+            <td>{{message.messageSent | timeago}}</td>
+            <td><button class="btn-btn-danger">Delete</button></td>
+        </tr>
+    }
+  </tbody>
+</table>
+}
+@if (messageService.paginatedResult()?.pagination) {
+    <div class="d-flex justify-content-center">
+      <pagination 
+      [boundaryLinks]="true" 
+      [totalItems]="messageService.paginatedResult()?.pagination!.totalItems" 
+      [itemsPerPage]="messageService.paginatedResult()?.pagination!.itemsPerPage" 
+      (pageChanged)="pageChanged($event)" 
+      [(ngModel)]="messageService.paginatedResult()?.pagination!.currentPage"
+      [maxSize]="10"
+      previousText="&lsaquo;" 
+      nextText="&rsaquo;" 
+      firstText="&laquo;"
+      lastText="&raquo;">
+    </pagination>
+    </div>
+    }
