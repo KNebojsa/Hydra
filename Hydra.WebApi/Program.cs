@@ -1,7 +1,9 @@
 
 using Hydra.WebApi.Data;
+using Hydra.WebApi.Entities;
 using Hydra.WebApi.Extensions;
 using Hydra.WebApi.Middleware;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Hydra.WebApi
@@ -34,8 +36,10 @@ namespace Hydra.WebApi
             try
             {
                 var context = services.GetRequiredService<DataContext>();
+                var userManager = services.GetRequiredService<UserManager<AppUser>>();
+                var roleManager = services.GetRequiredService<RoleManager<AppRole>>();
                 await context.Database.MigrateAsync();
-                await Seed.SeedUsers(context);
+                await Seed.SeedUsers(userManager, roleManager);
             }
             catch (Exception ex)
             {
