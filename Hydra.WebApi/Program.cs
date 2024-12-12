@@ -3,6 +3,7 @@ using Hydra.WebApi.Data;
 using Hydra.WebApi.Entities;
 using Hydra.WebApi.Extensions;
 using Hydra.WebApi.Middleware;
+using Hydra.WebApi.SignalR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,13 +23,14 @@ namespace Hydra.WebApi
             //ExceptionMiddleware has to go first
             app.UseMiddleware<ExceptionMiddleware>();
 
-            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod()
+            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowCredentials()
             .WithOrigins("http://localhost:4200", "https://localhost:4200/"));
 
             app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllers();
+            app.MapHub<PresenceHub>("hubs/presence");
 
             using var scope = app.Services.CreateScope();
             var services = scope.ServiceProvider;
