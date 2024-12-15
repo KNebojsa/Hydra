@@ -2,6 +2,7 @@
 using Hydra.WebApi.Helpers;
 using Hydra.WebApi.Interfaces;
 using Hydra.WebApi.Services;
+using Hydra.WebApi.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -28,6 +29,7 @@ public static class ApplicationServiceExtensions
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings"));
         services.AddSignalR();
+        services.AddSingleton<PresenceTracker>();
 
         return services;
     }

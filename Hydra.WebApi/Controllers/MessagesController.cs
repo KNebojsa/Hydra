@@ -13,14 +13,14 @@ namespace Hydra.WebApi.Controllers
     public class MessagesController(IMessageRepository messageRepository, IUserRepository userRepository, IMapper mapper) : BasicApiController
     {
         [HttpPost]
-        public async Task<ActionResult<MessageDto>> CreateMessage(CreateMessageDto createaMessageDto)
+        public async Task<ActionResult<MessageDto>> CreateMessage(CreateMessageDto createMessageDto)
         {
             var username = User.GetUsername();
-            if (username == createaMessageDto.RecipientUsername.ToLower())
+            if (username == createMessageDto.RecipientUsername.ToLower())
                 return BadRequest("You cannot send messages to yourself");
 
             var sender = await userRepository.GetUserByUsernameAsync(username);
-            var recipient = await userRepository.GetUserByUsernameAsync(createaMessageDto.RecipientUsername);
+            var recipient = await userRepository.GetUserByUsernameAsync(createMessageDto.RecipientUsername);
 
             if (recipient == null || sender == null || sender.UserName == null || recipient.UserName == null)
                 return BadRequest("Cannot send message at this time");
@@ -31,7 +31,7 @@ namespace Hydra.WebApi.Controllers
                 Recipient = recipient,
                 SenderUsername = sender.UserName,
                 RecipientUsername = recipient.UserName,
-                Content = createaMessageDto.Content
+                Content = createMessageDto.Content
             };
 
             messageRepository.AddMessage(message);

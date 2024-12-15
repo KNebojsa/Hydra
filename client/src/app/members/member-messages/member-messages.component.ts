@@ -2,13 +2,9 @@ import {
   Component,
   inject,
   input,
-  OnInit,
-  output,
   ViewChild,
-  viewChild,
 } from '@angular/core';
 import { MessageService } from '../../_services/message.service';
-import { Message } from '../../_models/Message';
 import { TimeagoModule, TimeagoPipe } from 'ngx-timeago';
 import { FormsModule, NgForm } from '@angular/forms';
 
@@ -21,16 +17,13 @@ import { FormsModule, NgForm } from '@angular/forms';
 })
 export class MemberMessagesComponent {
   @ViewChild('messageForm') messageForm?: NgForm;
-  private messageService = inject(MessageService);
+  messageService = inject(MessageService);
   username = input.required<string>();
-  messages = input.required<Message[]>();
   messageContent = '';
-  updateMessages = output<Message>();
   cutoffDate = new Date('1900-01-01T00:00:00');
 
   afterCutoffDate(date: any) {
     const formatedDate = new Date(date);
-
     if (formatedDate > this.cutoffDate) return true;
 
     return false;
@@ -38,12 +31,8 @@ export class MemberMessagesComponent {
 
   sendMessage() {
     this.messageService
-      .sendMessage(this.username(), this.messageContent)
-      .subscribe({
-        next: (message) => {
-          this.updateMessages.emit(message);
-          this.messageForm?.reset();
-        },
-      });
+      .sendMessage(this.username(), this.messageContent).then(()=> {
+        this.messageForm?.reset();
+      })
   }
 }
