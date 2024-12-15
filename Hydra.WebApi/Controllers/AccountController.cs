@@ -15,7 +15,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Hydra.WebApi.Controllers
 {
-    public class AccountController( UserManager<AppUser> userManager, ITokenService tokenService, IMapper mapper) : BasicApiController
+    public class AccountController(UserManager<AppUser> userManager, ITokenService tokenService, IMapper mapper) : BasicApiController
     {
         [HttpPost("register")] //account/register
         public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)

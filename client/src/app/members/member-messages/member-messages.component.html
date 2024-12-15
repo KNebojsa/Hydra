@@ -3,8 +3,11 @@
     @if (messageService.messageThread().length === 0) {
     <p>No messages yet</p>
     } @else {
-    <ul class="chat"></ul>
-    @for (message of messageService.messageThread(); track message.id) {
+    <ul class="chat"
+    #scrollMe
+    style="overflow-y: scroll; max-height: 500px; scroll-behavior: smooth;"
+    >
+      @for (message of messageService.messageThread(); track message.id) {
       <div>
         <span class="chat-img float-end">
           <img
@@ -19,10 +22,11 @@
               <span class="fa fa-clock-o">{{
                 message.messageSent | timeago
               }}</span>
-              @if (!afterCutoffDate(message.dateRead) && message.senderUsername !== username()) {
+              @if (!afterCutoffDate(message.dateRead) && message.senderUsername
+              !== username()) {
               <span class="text-danger">(unread)</span>
-              } @else if (afterCutoffDate(message.dateRead) && message.senderUsername !== username())
-              {
+              } @else if (afterCutoffDate(message.dateRead) &&
+              message.senderUsername !== username()) {
               <span class="text-success"
                 >(read {{ message.dateRead | timeago }})</span
               >
@@ -32,21 +36,29 @@
           <p>{{ message.content }}</p>
         </div>
       </div>
-    } }
+      }
+    </ul>
+    }
   </div>
   <div class="card-footer">
     <form #messageForm="ngForm" (ngSubmit)="sendMessage()">
       <div class="input-group">
         <input
-        name="messageContent"
-        required
-        [(ngModel)]="messageContent"
+          name="messageContent"
+          required
+          [(ngModel)]="messageContent"
           type="text"
           class="form-control input-sm"
           placeholder="Send a private message"
         />
         <div class="input-group-append">
-          <button [disabled]="!messageForm.valid" class="btn btn-primary" type="submit">Send</button>
+          <button
+            [disabled]="!messageForm.valid"
+            class="btn btn-primary"
+            type="submit"
+          >
+            Send
+          </button>
         </div>
       </div>
     </form>
