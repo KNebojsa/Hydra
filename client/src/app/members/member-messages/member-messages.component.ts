@@ -23,6 +23,7 @@ export class MemberMessagesComponent implements AfterViewChecked{
   username = input.required<string>();
   messageContent = '';
   cutoffDate = new Date('1900-01-01T00:00:00');
+  loading = false;
 
   afterCutoffDate(date: any) {
     const formatedDate = new Date(date);
@@ -32,12 +33,12 @@ export class MemberMessagesComponent implements AfterViewChecked{
   }
 
   sendMessage() {
+    this.loading = true;
     this.messageService
       .sendMessage(this.username(), this.messageContent).then(()=> {
         this.messageForm?.reset();
     this.scrollToBottom();
-
-      })
+      }).finally(()=>this.loading = false);
   }
 
 
