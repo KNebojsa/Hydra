@@ -1,15 +1,28 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { RegisterComponent } from '../register/register.component';
+import { Component } from '@angular/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RegisterComponent],
+  imports: [TranslateModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
 export class HomeComponent {
   registerMode = false;
+  profileImagePath = 'assets/images/profile.jpg';
+  currentLang: string;
+
+  constructor(private translate: TranslateService) {
+    this.currentLang = 'en';
+    translate.setDefaultLang('en');
+    translate.use('en');
+  }
+
+  switchLanguage(lang: string) {
+    this.currentLang = lang;
+    this.translate.use(lang);
+  }
 
   registerToggle() {
     this.registerMode = !this.registerMode;

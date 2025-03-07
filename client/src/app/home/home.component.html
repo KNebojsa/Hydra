@@ -1,24 +1,236 @@
-<div class="container mt-5">
-    <div style="text-align: center;">
-
-@if (!registerMode) {
+<!-- <div class="container mt-5">
+  <div style="text-align: center">
+    @if (!registerMode) {
     <h1>Find your match</h1>
-        <p class="lead">Come on in to view your mathces... all you need to do is sign up!</p>
-        <div class="text-center">
-            <button (click)="registerToggle()" class="btn btn-primary btn-lg me-2">Register</button>
-            <button class="btn btn-info btn-lg me-2">Learn more</button>
-        </div>
-}
-@else {
+    <p class="lead">
+      Come on in to view your mathces... all you need to do is sign up!
+    </p>
+    <div class="text-center">
+      <button (click)="registerToggle()" class="btn btn-primary btn-lg me-2">
+        Register
+      </button>
+      <button class="btn btn-info btn-lg me-2">Learn more</button>
+    </div>
+    } @else {
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-4">
-                <app-register 
-                (cancelRegister)="cancelRegisterMode($event)"
-                ></app-register>
-            </div>
+      <div class="row justify-content-center">
+        <div class="col-4">
+          <app-register
+            (cancelRegister)="cancelRegisterMode($event)"
+          ></app-register>
         </div>
+      </div>
     </div>
-}    
+    }
+  </div>
+</div> -->
+
+<div class="language-switch">
+  <div class="language-tabs">
+    <button
+      [class.active]="currentLang === 'en'"
+      (click)="switchLanguage('en')"
+    >
+      EN
+    </button>
+    <button
+      [class.active]="currentLang === 'sr'"
+      (click)="switchLanguage('sr')"
+    >
+      SR
+    </button>
+  </div>
+</div>
+
+<div class="profile-container">
+  <div class="left-section">
+    <img
+      [src]="profileImagePath"
+      alt="{{ 'profilePicture' | translate }}"
+      class="profile-image"
+    />
+
+    <div class="contact-info">
+      <h2 class="section-title">{{ "contact" | translate }}</h2>
+      <a href="mailto:kovacic.nebojsa96@gmail.com">
+        {{ "kovacic.nebojsa96@gmail.com" }}
+      </a>
+      <a href="tel:+381063770654">{{ "(+381) 063770654" }}</a>
+      <a href="https://www.linkedin.com/in/nebojsa-kovacic">
+        {{ "www.linkedin.com/in/nebojsa-kovacic" }}
+      </a>
     </div>
+
+    <div class="experience-section">
+      <h2 class="section-title">{{ "experience" | translate }}</h2>
+      <div class="experience-item">
+        <div class="job-title">{{ "jobTitles.devtechLead" | translate }}</div>
+        <div class="date-range">
+          {{ "dateRanges.oct2021" | translate }} -
+          {{ "dateRanges.present" | translate }}
+        </div>
+      </div>
+      <div class="experience-item">
+        <div class="job-title">{{ "jobTitles.devtech" | translate }}</div>
+        <div class="date-range">
+          {{ "dateRanges.dec2020" | translate }} -
+          {{ "dateRanges.oct2021" | translate }}
+        </div>
+      </div>
+      <div class="experience-item">
+        <div class="job-title">{{ "jobTitles.protech" | translate }}</div>
+        <div class="date-range">
+          {{ "dateRanges.dec2020" | translate }} -
+          {{ "dateRanges.oct2021" | translate }}
+        </div>
+      </div>
+    </div>
+
+    <div class="personal-profile">
+      <h2 class="section-title">{{ "personalProfile" | translate }}</h2>
+      <p>{{ "personalProfileText" | translate }}</p>
+    </div>
+
+    <div class="languages">
+      <h2 class="section-title">{{ "languages" | translate }}</h2>
+      <div class="language-item">
+        <span class="language-name">{{ "serbian" | translate }}</span>
+        <span class="language-level">- {{ "mainLanguage" | translate }}</span>
+      </div>
+      <div class="language-item">
+        <span class="language-name">{{ "english" | translate }}</span>
+        <span class="language-level"
+          >- {{ "upperIntermediate" | translate }}</span
+        >
+      </div>
+    </div>
+
+    <div class="hobbies">
+      <h2 class="section-title">{{ "hobbies" | translate }}</h2>
+      <ul class="hobby-list">
+        <li>{{ "tennis" | translate }}</li>
+        <li>{{ "tableTennis" | translate }}</li>
+        <li>{{ "modernPsychology" | translate }}</li>
+      </ul>
+    </div>
+
+    <div class="education">
+      <h2 class="section-title">{{ "education" | translate }}</h2>
+      <div class="education-item">
+        <div class="edu-title">
+          {{ "education.itAcademy.title" | translate }}
+        </div>
+        <div class="edu-date">{{ "eduDates.2019_2020" | translate }}</div>
+        <div class="edu-description">
+          {{ "education.itAcademy.description" | translate }}
+        </div>
+      </div>
+      <div class="education-item">
+        <div class="edu-title">
+          {{ "education.ftn.title" | translate }}
+        </div>
+        <div class="edu-date">{{ "eduDates.2015_2019" | translate }}</div>
+        <div class="edu-description">
+          {{ "education.ftn.description" | translate }}
+        </div>
+      </div>
+      <div class="education-item">
+        <div class="edu-title">
+          {{ "education.highSchool.title" | translate }}
+        </div>
+        <div class="edu-date">{{ "eduDates.2011_2015" | translate }}</div>
+        <div class="edu-description">
+          {{ "education.highSchool.description" | translate }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="right-section">
+    <div class="name-header">
+      <h1>{{ "name" | translate }}</h1>
+    </div>
+
+    <div class="technologies">
+      <h2 class="section-title">{{ "technologies" | translate }}:</h2>
+      <p>{{ "techStack" | translate }}</p>
+
+      <div class="tech-category">
+        <p class="tech-title">{{ "practices" | translate }}:</p>
+        <p>{{ "practicesList" | translate }}</p>
+      </div>
+
+      <div class="tech-category">
+        <p class="tech-title">{{ "databases" | translate }}:</p>
+        <p>{{ "databasesList" | translate }}</p>
+      </div>
+    </div>
+
+    <div class="projects">
+      <h2 class="section-title">{{ "projects" | translate }}</h2>
+
+      <div class="project-item">
+        <h3 class="project-title">
+          {{ "projects.devtechLead.title" | translate }}
+        </h3>
+        <p>{{ "projects.devtechLead.description" | translate }}</p>
+      </div>
+
+      <div class="project-item">
+        <h3 class="project-title">
+          {{ "projects.devtech2022.title" | translate }}
+        </h3>
+        <p>{{ "projects.devtech2022.description" | translate }}</p>
+        <p class="tech-stack">
+          {{ "projects.devtech2022.techStack" | translate }}
+        </p>
+      </div>
+
+      <div class="project-item">
+        <h3 class="project-title">
+          {{ "projects.devtech2021.title" | translate }}
+        </h3>
+        <p>{{ "projects.devtech2021.description" | translate }}</p>
+        <p>{{ "projects.devtech2021.focus" | translate }}</p>
+        <p class="tech-stack">
+          {{ "projects.devtech2021.techStack" | translate }}
+        </p>
+      </div>
+
+      <div class="project-item">
+        <h3 class="project-title">
+          {{ "projects.promotester.title" | translate }}
+        </h3>
+        <p>{{ "projects.promotester.description" | translate }}</p>
+      </div>
+
+      <div class="project-item">
+        <h3 class="project-title">
+          {{ "projects.promoanalyzer.title" | translate }}
+        </h3>
+        <p>{{ "projects.promoanalyzer.description" | translate }}</p>
+      </div>
+
+      <div class="project-item">
+        <h3 class="project-title">
+          {{ "projects.testcreator.title" | translate }}
+        </h3>
+        <p>{{ "projects.testcreator.description" | translate }}</p>
+      </div>
+
+      <div class="project-item">
+        <h3 class="project-title">
+          {{ "projects.buycar.title" | translate }}
+        </h3>
+        <p>{{ "projects.buycar.description" | translate }}</p>
+      </div>
+
+      <div class="project-item">
+        <h3 class="project-title">
+          {{ "projects.github.title" | translate }}
+        </h3>
+        <p>{{ "projects.github.link" | translate }}</p>
+      </div>
+    </div>
+  </div>
 </div>
