@@ -1,4 +1,161 @@
 
+/* Technologies section */
+.tech-category {
+  margin: 1.5rem 0;
+}
+
+.tech-title {
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+  font-size: 1.1rem;
+}
+
+.tech-category p,
+.tech-stack,
+.right-section p,
+.right-section .date-range,
+.right-section .tech-stack {
+  color: #000;
+}
+
+/* Left section text remains white */
+.left-section {
+  color: white;
+}
+
+.left-section .date-range,
+.left-section .edu-date,
+.left-section .language-item,
+.left-section .hobby-list,
+.left-section a {
+  color: white;
+}
+
+/* Video container styles */
+.video-container {
+  width: 100%;
+  max-width: 1170px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.video-wrapper {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+}
+
+.video-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: 4px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 767px) {
+  .video-container {
+    padding: 0 0.5rem;
+    margin-bottom: 1rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .video-container {
+    margin: 1rem auto;
+  }
+}
+
+.video-link-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 1rem auto;
+  padding: 0 1rem;
+}
+
+.video-link {
+  display: block;
+  background: #5bc0de;
+  color: white;
+  text-decoration: none;
+  padding: 1rem;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.video-link:hover {
+  background: #46b8da;
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.video-link-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.video-link-content i {
+  font-size: 1.5rem;
+}
+
+/* Right section text color */
+.right-section {
+  color: #fff;
+}
+
+.right-section .section-title,
+.right-section .project-title,
+.right-section p,
+.right-section .date-range,
+.right-section .tech-stack,
+.tech-category p,
+.tech-title {
+  color: #fff;
+}
+
+/* Update border color for section titles */
+.section-title {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Project item border color */
+.project-item {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Education section spacing */
+.education-item {
+  margin-bottom: 1.5rem;
+}
+
+.edu-title {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.edu-date {
+  margin-bottom: 0.5rem;
+  opacity: 0.9;
+}
+
+/* Languages and hobbies spacing */
+.hobby-list li {
+  margin-bottom: 0.8rem;
+}
+
+/* Personal profile spacing */
+.personal-profile p {
+  line-height: 1.6;
+  margin: 1rem 0;
+}
+
 .course-container {
   padding: 2rem;
   color: white;
@@ -20,6 +177,7 @@ h1 {
   opacity: 0.9;
 }
 
+/* Section styling */
 .section {
   margin-bottom: 3rem;
   background: rgba(255, 255, 255, 0.05);
@@ -63,33 +221,41 @@ h1 {
   flex-grow: 1;
 }
 
-/* Responsive adjustments */
-@media (max-width: 1200px) {
-  .usage-steps {
-    grid-template-columns: repeat(3, 1fr);
-  }
+/* Tech grid styling */
+.tech-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
 }
 
-@media (max-width: 768px) {
-  .usage-steps {
-    grid-template-columns: repeat(2, 1fr);
-  }
+.tech-item {
+  background: rgba(91, 192, 222, 0.1);
+  padding: 1.5rem;
+  border-radius: 6px;
 }
 
-@media (max-width: 576px) {
-  .usage-steps {
-    grid-template-columns: 1fr;
-}
-}
-
-.container {
-  margin-top: 2rem;
+.tech-item h3 {
+  color: #5bc0de;
+  margin-bottom: 1rem;
 }
 
-.row {
-  background: rgba(255, 255, 255, 0.05);
-  padding: 2rem;
-  border-radius: 8px;
+/* List styling */
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  margin-bottom: 0.8rem;
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+li:before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: #5bc0de;
 }
 
 /* Register button styling */
@@ -125,11 +291,57 @@ h1 {
   box-shadow: 0 0 0 3px rgba(91, 192, 222, 0.3);
 }
 
+/* Container for register form */
+.container {
+  margin-top: 2rem;
+}
+
+.row {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 2rem;
+  border-radius: 8px;
+}
+
 /* Responsive adjustments */
+@media (max-width: 1200px) {
+  .usage-steps {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
 @media (max-width: 768px) {
+  .course-container {
+    padding: 1rem;
+  }
+
+  .usage-steps {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .tech-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .section {
+    padding: 1.5rem;
+  }
+
   .register-btn {
     padding: 0.8rem 2rem;
     font-size: 1rem;
   }
 }
 
+@media (max-width: 576px) {
+  .usage-steps {
+    grid-template-columns: 1fr;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  .section h2 {
+    font-size: 1.5rem;
+  }
+}
