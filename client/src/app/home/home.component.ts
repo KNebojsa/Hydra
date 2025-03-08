@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { RegisterComponent } from '../register/register.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [TranslateModule],
+  imports: [TranslateModule, CommonModule, RegisterComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
@@ -29,6 +31,10 @@ export class HomeComponent {
   }
 
   cancelRegisterMode(event: boolean) {
-    this.registerMode = event;
+    this.registerMode = false;
+  }
+
+  showRegisterForm() {
+    this.registerMode = true;
   }
 }

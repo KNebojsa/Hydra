@@ -1,220 +1,122 @@
-<!-- YouTube Video Container -->
-<div class="video-container">
-  <div class="video-wrapper">
-    <iframe
-      src="https://www.youtube.com/embed/xQHvCo6rabw?start=122&rel=0&modestbranding=1"
-      title="YouTube video player"
-      allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      allowfullscreen
-    >
-    </iframe>
+<div class="course-container">
+  <div class="header">
+    <h1>Dating Application</h1>
+    <p class="subtitle">Built with ASP.NET Core and Angular</p>
+    @if (!registerMode) {
+    <button class="register-btn" (click)="showRegisterForm()">Register</button>
+    }
   </div>
-</div>
 
-<!-- Language Switcher -->
-<div class="language-switch">
-  <div class="language-tabs">
-    <button
-      [class.active]="currentLang === 'en'"
-      (click)="switchLanguage('en')"
-    >
-      EN
-    </button>
-    <button
-      [class.active]="currentLang === 'sr'"
-      (click)="switchLanguage('sr')"
-    >
-      SR
-    </button>
+  @if (registerMode) {
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-4">
+        <app-register
+          (cancelRegister)="cancelRegisterMode($event)"
+        ></app-register>
+      </div>
+    </div>
   </div>
-</div>
-
-<div class="profile-container">
-  <div class="left-section">
-    <img
-      [src]="profileImagePath"
-      alt="{{ 'profilePicture' | translate }}"
-      class="profile-image"
-    />
-
-    <div class="contact-info">
-      <h2 class="section-title">{{ "contact" | translate }}</h2>
-      <a href="mailto:kovacic.nebojsa96@gmail.com">
-        {{ "kovacic.nebojsa96@gmail.com" }}
-      </a>
-      <a href="tel:+381063770654">{{ "(+381) 063770654" }}</a>
-      <a href="https://www.linkedin.com/in/nebojsa-kovacic">
-        {{ "www.linkedin.com/in/nebojsa-kovacic" }}
-      </a>
-    </div>
-
-    <div class="experience-section">
-      <h2 class="section-title">{{ "experience" | translate }}</h2>
-      <div class="experience-item">
-        <div class="job-title">{{ "jobTitles.devtechLead" | translate }}</div>
-        <div class="date-range">
-          {{ "dateRanges.oct2021" | translate }} -
-          {{ "dateRanges.present" | translate }}
-        </div>
+  } @else {
+  <div class="section">
+    <h2>How to Use</h2>
+    <div class="usage-steps">
+      <div class="step">
+        <h3>1. Registration</h3>
+        <p>
+          Create an account with your email and password. Upload a profile photo
+          to get started.
+        </p>
       </div>
-      <div class="experience-item">
-        <div class="job-title">{{ "jobTitles.devtech" | translate }}</div>
-        <div class="date-range">
-          {{ "dateRanges.dec2020" | translate }} -
-          {{ "dateRanges.oct2021" | translate }}
-        </div>
+      <div class="step">
+        <h3>2. Profile Setup</h3>
+        <p>
+          Complete your profile with interests, photos, and personal
+          information.
+        </p>
       </div>
-      <div class="experience-item">
-        <div class="job-title">{{ "jobTitles.protech" | translate }}</div>
-        <div class="date-range">
-          {{ "dateRanges.dec2020" | translate }} -
-          {{ "dateRanges.oct2021" | translate }}
-        </div>
+      <div class="step">
+        <h3>3. Find Matches</h3>
+        <p>
+          Browse other members using filters for age, location, and interests.
+        </p>
+      </div>
+      <div class="step">
+        <h3>4. Connect</h3>
+        <p>
+          Like profiles and send messages to your matches. The application shows
+          you when other users are online for timely interactions.
+        </p>
+      </div>
+      <div class="step">
+        <h3>5. Stay Engaged</h3>
+        <p>
+          Receive instant notifications when your matches are active or when you
+          receive new messages. Engage in real-time conversations.
+        </p>
       </div>
     </div>
+  </div>
 
-    <div class="personal-profile">
-      <h2 class="section-title">{{ "personalProfile" | translate }}</h2>
-      <p>{{ "personalProfileText" | translate }}</p>
-    </div>
-
-    <div class="languages">
-      <h2 class="section-title">{{ "languages" | translate }}</h2>
-      <div class="language-item">
-        <span class="language-name">{{ "serbian" | translate }}</span>
-        <span class="language-level">- {{ "mainLanguage" | translate }}</span>
-      </div>
-      <div class="language-item">
-        <span class="language-name">{{ "english" | translate }}</span>
-        <span class="language-level"
-          >- {{ "upperIntermediate" | translate }}</span
-        >
-      </div>
-    </div>
-
-    <div class="hobbies">
-      <h2 class="section-title">{{ "hobbies" | translate }}</h2>
-      <ul class="hobby-list">
-        <li>{{ "tennis" | translate }}</li>
-        <li>{{ "tableTennis" | translate }}</li>
-        <li>{{ "modernPsychology" | translate }}</li>
+  <div class="content">
+    <div class="section">
+      <h2>Key Features</h2>
+      <ul>
+        <li>Secure Authentication with JWT & Role-based Authorization</li>
+        <li>Real-time Private Messaging with SignalR</li>
+        <li>Cloud-based Photo Management using Cloudinary</li>
+        <li>Advanced Member Filtering & Matching System</li>
+        <li>Interactive User Profiles with Multiple Photos</li>
+        <li>Real-time Presence Tracking System for User Engagement</li>
+        <li>Real-time Notifications & Activity Tracking</li>
+        <li>Like System with Match Notifications</li>
+        <li>Responsive Design for All Devices</li>
+        <li>Error Handling & Data Validation</li>
       </ul>
     </div>
 
-    <div class="education">
-      <h2 class="section-title">{{ "education" | translate }}</h2>
-      <div class="education-item">
-        <div class="edu-date">{{ "eduDates.2019_2020" | translate }}</div>
-        <div class="edu-description">
-          {{ "education.itAcademy.description" | translate }}
-        </div>
+    <div class="section">
+      <h2>CI/CD & Deployment</h2>
+      <ul>
+        <li>GitHub Actions for Continuous Integration</li>
+        <li>Automated Testing on Pull Requests</li>
+        <li>Automatic Deployment to Azure</li>
+        <li>Docker Containerization</li>
+        <li>Azure App Service Hosting</li>
+        <li>Azure SQL Database</li>
+      </ul>
+    </div>
+  </div>
+  <div class="section">
+    <h2>Technical Stack</h2>
+    <div class="tech-grid">
+      <div class="tech-item">
+        <h3>Backend</h3>
+        <ul>
+          <li>.NET 8 Web API</li>
+          <li>Entity Framework Core</li>
+          <li>Identity & JWT Authentication</li>
+          <li>SignalR for Real-time</li>
+          <li>Repository Pattern</li>
+          <li>AutoMapper</li>
+          <li>Cloudinary Integration</li>
+          <li>Error Handling</li>
+        </ul>
       </div>
-      <div class="education-item">
-        <div class="edu-title">
-          {{ "education.ftn.title" | translate }}
-        </div>
-        <div class="edu-date">{{ "eduDates.2015_2019" | translate }}</div>
-        <div class="edu-description">
-          {{ "education.ftn.description" | translate }}
-        </div>
-      </div>
-      <div class="education-item">
-        <div class="edu-title">
-          {{ "education.highSchool.title" | translate }}
-        </div>
-        <div class="edu-date">{{ "eduDates.2011_2015" | translate }}</div>
-        <div class="edu-description">
-          {{ "education.highSchool.description" | translate }}
-        </div>
+      <div class="tech-item">
+        <h3>Frontend</h3>
+        <ul>
+          <li>Angular 18</li>
+          <li>TypeScript</li>
+          <li>RxJS & Observables</li>
+          <li>Angular Guards</li>
+          <li>JWT Interceptors</li>
+          <li>Reactive Forms</li>
+          <li>Angular Services</li>
+          <li>Photo Upload</li>
+        </ul>
       </div>
     </div>
   </div>
-
-  <div class="right-section">
-    <div class="name-header">
-      <h1>{{ "name" | translate }}</h1>
-    </div>
-
-    <div class="technologies">
-      <h2 class="section-title">{{ "technologies" | translate }}:</h2>
-      <p>{{ "techStack" | translate }}</p>
-
-      <div class="tech-category">
-        <p class="tech-title">{{ "practices" | translate }}:</p>
-        <p>{{ "practicesList" | translate }}</p>
-      </div>
-
-      <div class="tech-category">
-        <p class="tech-title">{{ "databases" | translate }}:</p>
-        <p>{{ "databasesList" | translate }}</p>
-      </div>
-    </div>
-
-    <div class="projects">
-      <h2 class="section-title">{{ "projects" | translate }}</h2>
-
-      <div class="project-item">
-        <h3 class="project-title">
-          {{ "projects.devtechLead.title" | translate }}
-        </h3>
-        <p>{{ "projects.devtechLead.description" | translate }}</p>
-      </div>
-
-      <div class="project-item">
-        <h3 class="project-title">
-          {{ "projects.devtech2022.title" | translate }}
-        </h3>
-        <p>{{ "projects.devtech2022.description" | translate }}</p>
-        <p class="tech-stack">
-          {{ "projects.devtech2022.techStack" | translate }}
-        </p>
-      </div>
-
-      <div class="project-item">
-        <h3 class="project-title">
-          {{ "projects.devtech2021.title" | translate }}
-        </h3>
-        <p>{{ "projects.devtech2021.description" | translate }}</p>
-        <p>{{ "projects.devtech2021.focus" | translate }}</p>
-        <p class="tech-stack">
-          {{ "projects.devtech2021.techStack" | translate }}
-        </p>
-      </div>
-
-      <div class="project-item">
-        <h3 class="project-title">
-          {{ "projects.promotester.title" | translate }}
-        </h3>
-        <p>{{ "projects.promotester.description" | translate }}</p>
-      </div>
-
-      <div class="project-item">
-        <h3 class="project-title">
-          {{ "projects.promoanalyzer.title" | translate }}
-        </h3>
-        <p>{{ "projects.promoanalyzer.description" | translate }}</p>
-      </div>
-
-      <div class="project-item">
-        <h3 class="project-title">
-          {{ "projects.testcreator.title" | translate }}
-        </h3>
-        <p>{{ "projects.testcreator.description" | translate }}</p>
-      </div>
-
-      <div class="project-item">
-        <h3 class="project-title">
-          {{ "projects.buycar.title" | translate }}
-        </h3>
-        <p>{{ "projects.buycar.description" | translate }}</p>
-      </div>
-
-      <div class="project-item">
-        <h3 class="project-title">
-          {{ "projects.github.title" | translate }}
-        </h3>
-        <p>{{ "projects.github.link" | translate }}</p>
-      </div>
-    </div>
-  </div>
+  }
 </div>
