@@ -1,48 +1,36 @@
-name: Build and deploy ASP.Net Core app to Azure Web App - Hydra-hn
+name: Build and deploy ASP.Net Core app to Azure Web App - azure-app-nele-vs
 
 on:
   push:
     branches:
-      - develop
+      - master
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: windows-latest
+    permissions:
+      contents: read
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-
-      - name: Install Angular CLI
-        run: npm install -g @angular/cli@17
-
-      - name: Install deps and build angular app
-        run: |
-          cd client 
-          npm install
-          ng build
-
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '8.x'
+          dotnet-version: '9.x'
 
       - name: Build with dotnet
         run: dotnet build --configuration Release
 
       - name: dotnet publish
-        run: dotnet publish -c Release -o "${{env.DOTNET_ROOT}}/myapp"
+        run: dotnet publish -c Release -o ./published
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: .net-app
-          path: ${{env.DOTNET_ROOT}}/myapp
+          path: ./published
 
   deploy:
     runs-on: windows-latest
@@ -51,7 +39,8 @@ jobs:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write #This is required for requesting the JWT
+      id-token: write
+      contents: read
 
     steps:
       - name: Download artifact from build job
@@ -62,14 +51,14 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_730BB614FD3743C392D32F8DC8A722D4 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_05EFD4D13B1E47368B5B4A20C2370ACD }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_101B0B8B5F6644C5B9B36EF1D86FA014 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_F4492A39854844D799F906BD47D46A0F }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_77C77F54A39F4F0C98AA0E5CEBBBE415 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_BA4AB0D047C6440FBCAA90B2ABB3DCF0 }}
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'Hydra-hn'
+          app-name: 'azure-app-nele-vs'
           slot-name: 'Production'
           package: .
